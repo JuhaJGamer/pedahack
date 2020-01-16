@@ -5,17 +5,19 @@ var regex_main = /\[\[(?:[ox]:|_:v=|h=)[^\]]+\]\]/gi;    //main regex to catch i
 var regex_h = /\[\[(h=)[^\]]+\]\]/i;                     //empty write field regex
 var regex_v = /\[\[(_:v=)[^\]]+\]\]/i;                   //write field regex
 var regex_va = /_:v=([^|:]+)/i;                          //catch answer regex
-var regex_ox = /\[\[[ox]:s=(\d)[^\]]*\]\]/i;             //catch points regex
+var regex_ox = /\[\[[ox]:s=(-?\d)[^\]]*\]\]/i;             //catch points regex
 
 
 elements.forEach((x,i) => { //Loop trough all peda.net forms
 	forms[i] = {
 		node: x.parentNode,                     //get main form node
-		string: x.value,                        //get form string 
+		string: x.value,                        //get form string
 		matches: x.value.match(regex_main),     //get field definitions
 		inputs: x.parentNode.getElementsByTagName("input") //get all input fields
 	}; //Set form object
+    //console.log(x.value)
 });
+
 
 browser.runtime.onMessage.addListener((msg) => { //Listener for browserAction click message from bg.js
 
@@ -37,7 +39,7 @@ browser.runtime.onMessage.addListener((msg) => { //Listener for browserAction cl
 				//radio and check buttons
 				else
 				{
-					if(x.match(regex_ox)[1] != "0")      //if checking this gives you points
+					if(parseInt(x.match(regex_ox)[1]) > 0)      //if checking this gives you points
 					{
 						y.inputs[i].checked = true;  //check it
 					}

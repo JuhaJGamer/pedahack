@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Pedahack",
-	"version": "1.11",
+	"version": "1.30",
 
 	"description":"Automatically answers most peda.net forms",
 
